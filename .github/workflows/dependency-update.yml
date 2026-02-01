@@ -1,0 +1,44 @@
+name: Dependency Update Check
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Weekly on Monday
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+    
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '22'
+        cache: 'pnpm'
+    
+    - name: Check for outdated packages
+      run: |
+        pnpm outdated || true
+        echo "## Outdated Dependencies" >> $GITHUB_STEP_SUMMARY
+        pnpm outdated --format json | jq -r 'to_entries[] | "- \(.key): \(.value.current) → \(.value.wanted)"' >> $GITHUB_STEP_SUMMARY || echo "No outdated dependencies found" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Check for security vulnerabilities
+      run: |
+        pnpm audit --audit-level moderate || true
+        echo "## Security Audit" >> $GITHUB_STEP_SUMMARY
+        pnpm audit --json | jq -r '.vulnerabilities | to_entries[] | "- \(.key): \(.value.severity)"' >> $GITHUB_STEP_SUMMARY || echo "No security vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Check for unused dependencies
+      run: |
+        pnpm run unused-deps || true

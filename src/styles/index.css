@@ -1,0 +1,385 @@
+.font-monospace {
+  font-family:
+    SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+  letter-spacing: -0.02em;
+}
+
+.valid-feedback .font-monospace,
+.invalid-feedback .font-monospace {
+  font-size: clamp(0.875rem, 3vw, 1rem) !important;
+}
+
+.valid-feedback .font-monospace.fs-6,
+.invalid-feedback .font-monospace.fs-6 {
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem) !important;
+}
+
+.valid-feedback,
+.invalid-feedback {
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem) !important;
+}
+
+.valid-feedback .fw-bold,
+.invalid-feedback .fw-bold {
+  font-size: clamp(1rem, 3.5vw, 1.25rem);
+}
+
+.card-body .ipv6-display {
+  overflow-wrap: break-word;
+  max-width: 100%;
+  display: block;
+  text-align: center;
+  font-size: clamp(1rem, 4vw, 1.5rem) !important;
+  line-height: 1.5;
+  padding: 0.5rem;
+  white-space: normal;
+}
+
+.card-body .form-control-lg.font-monospace {
+  font-size: clamp(0.875rem, 3vw, 1rem);
+  padding: clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1rem);
+}
+
+.card-body .font-monospace {
+  font-size: clamp(0.875rem, 3vw, 1rem);
+}
+
+.card-body .font-monospace.fs-6 {
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+}
+
+.katex {
+  font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
+}
+
+.katex .texttt {
+  overflow-wrap: break-word;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.alert {
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  border-left: clamp(3px, 0.5vw, 4px) solid;
+}
+
+.alert .fw-semibold {
+  font-size: clamp(0.95rem, 3vw, 1.05rem);
+}
+
+.alert.alert-info {
+  border-left-color: var(--bs-info);
+}
+
+.alert.alert-success {
+  border-left-color: var(--bs-success);
+}
+
+.alert.alert-danger {
+  border-left-color: var(--bs-danger);
+}
+
+.bg-body-tertiary {
+  padding: clamp(0.75rem, 2.5vw, 1rem) !important;
+}
+
+.bg-body-tertiary .fw-semibold {
+  font-size: clamp(0.95rem, 3vw, 1.05rem);
+}
+
+.bg-body-tertiary ul {
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  padding-left: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.bg-body-tertiary code {
+  font-size: clamp(0.8rem, 2.5vw, 0.9em);
+  padding: 0.125rem 0.25rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 0.25rem;
+}
+
+.card.border .card-body {
+  padding: clamp(0.75rem, 2.5vw, 1rem);
+}
+
+.card.border .card-body small {
+  font-size: clamp(0.75rem, 2vw, 0.875rem);
+}
+
+.card.border .card-body .font-monospace {
+  font-size: clamp(0.875rem, 3.5vw, 1.1rem) !important;
+  word-break: break-all;
+}
+
+@media (max-width: 768px) {
+  .card-body .bg-body-secondary {
+    padding: clamp(0.75rem, 3vw, 1rem) !important;
+  }
+
+  .card-body .bg-body-secondary .ipv6-display {
+    font-size: clamp(0.875rem, 4vw, 1.25rem) !important;
+    padding: clamp(0.5rem, 2vw, 0.75rem);
+  }
+
+  .nav-tabs {
+    font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-tabs .nav-link {
+    padding: clamp(0.5rem, 2vw, 0.75rem);
+    white-space: nowrap;
+  }
+
+  .nav-tabs .nav-link svg {
+    width: clamp(0.875rem, 3vw, 1rem);
+    height: clamp(0.875rem, 3vw, 1rem);
+  }
+}
+
+@media (max-width: 576px) {
+  .valid-feedback,
+  .invalid-feedback {
+    font-size: clamp(0.8rem, 3vw, 0.9rem) !important;
+  }
+
+  .bg-body-tertiary ul {
+    font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+    padding-left: 1rem;
+  }
+
+  .navbar .navbar-brand {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+  }
+
+  .navbar small {
+    font-size: clamp(0.7rem, 2vw, 0.75rem);
+  }
+
+  .card-header h5 {
+    font-size: clamp(1rem, 3.5vw, 1.25rem);
+  }
+
+  .btn {
+    font-size: clamp(0.875rem, 3vw, 1rem);
+    padding: clamp(0.5rem, 2vw, 0.625rem) clamp(0.75rem, 3vw, 1rem);
+  }
+}
+
+.card {
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.nav-tabs .nav-link {
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+  border-color: transparent;
+  background-color: rgba(var(--bs-primary-rgb), 0.1);
+}
+
+.nav-tabs .nav-link.active {
+  font-weight: 600;
+}
+
+.btn {
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.offcanvas-body .list-group-item {
+  font-size: clamp(0.875rem, 3vw, 1rem);
+  padding: clamp(0.75rem, 2.5vw, 1rem);
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.offcanvas-body .list-group-item:hover {
+  transform: translateX(4px);
+}
+
+.progress {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  height: clamp(1.5rem, 4vw, 1.875rem);
+}
+
+.progress .progress-bar {
+  transition: width 0.6s ease;
+  font-size: clamp(0.875rem, 3vw, 1rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+.table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: clamp(0.65rem, 2vw, 0.75rem);
+  letter-spacing: 0.05em;
+  padding: clamp(0.5rem, 2vw, 0.75rem);
+}
+
+.table td {
+  padding: clamp(0.5rem, 2vw, 0.75rem);
+}
+
+.badge {
+  font-weight: 600;
+  padding: clamp(0.25em, 1vw, 0.35em) clamp(0.5em, 2vw, 0.65em);
+  font-size: clamp(0.75rem, 2.5vw, 0.875rem);
+}
+
+.modal-dialog {
+  margin: clamp(0.5rem, 2vw, 1.75rem);
+}
+
+.modal-dialog .modal-header h5 {
+  font-size: clamp(1rem, 4vw, 1.25rem);
+}
+
+.modal-dialog .modal-body {
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+  padding: clamp(1rem, 3vw, 1.5rem);
+}
+
+[data-bs-theme="dark"] {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .card {
+  background-color: var(--bs-dark);
+}
+
+[data-bs-theme="dark"] .card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-bs-theme="dark"] .bg-body-secondary {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-bs-theme="dark"] .bg-body-tertiary {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-bs-theme="dark"] .bg-body-tertiary code {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--bs-light);
+}
+
+[data-bs-theme="dark"] .form-control {
+  background-color: var(--bs-dark);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--bs-light);
+}
+
+[data-bs-theme="dark"] .form-control:focus {
+  background-color: var(--bs-dark);
+  border-color: var(--bs-primary);
+  color: var(--bs-light);
+  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+[data-bs-theme="dark"] .nav-tabs .nav-link:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-bs-theme="dark"]::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-bs-theme="dark"]::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"]::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+[data-bs-theme="dark"]::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+[data-bs-theme="light"] .bg-body-secondary {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-bs-theme="light"] .bg-body-tertiary {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-bs-theme="light"] .bg-body-tertiary code {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-bs-theme="light"] .form-control {
+  background-color: #fff;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-bs-theme="light"] .form-control:focus {
+  background-color: #fff;
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+* {
+  transition-property: background-color, border-color, color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+.container {
+  max-width: clamp(320px, 100%, 1400px);
+  padding-left: clamp(0.75rem, 3vw, 1rem);
+  padding-right: clamp(0.75rem, 3vw, 1rem);
+}
+
+@media (max-width: 768px) {
+  button,
+  .btn,
+  .nav-link,
+  .list-group-item {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
