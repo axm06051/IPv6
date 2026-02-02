@@ -20,20 +20,25 @@ jobs:
       uses: actions/setup-node@v6
       with:
         node-version: '22'
-        cache: 'npm'
+        cache: 'pnpm'
+    
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
     
     - name: Check for outdated packages
       run: |
-        npm outdated || true
+        pnpm outdated || true
         echo "## Outdated Dependencies" >> $GITHUB_STEP_SUMMARY
-        npm outdated --json | jq -r 'to_entries[] | "- \(.key): \(.value.current) → \(.value.wanted)"' >> $GITHUB_STEP_SUMMARY || echo "No outdated dependencies found" >> $GITHUB_STEP_SUMMARY
+        pnpm outdated --format json | jq -r 'to_entries[] | "- \(.key): \(.value.current) → \(.value.wanted)"' >> $GITHUB_STEP_SUMMARY || echo "No outdated dependencies found" >> $GITHUB_STEP_SUMMARY
     
     - name: Check for security vulnerabilities
       run: |
-        npm audit --audit-level moderate || true
+        pnpm audit --audit-level moderate || true
         echo "## Security Audit" >> $GITHUB_STEP_SUMMARY
-        npm audit --json | jq -r '.vulnerabilities | to_entries[] | "- \(.key): \(.value.severity)"' >> $GITHUB_STEP_SUMMARY || echo "No security vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+        pnpm audit --json | jq -r '.vulnerabilities | to_entries[] | "- \(.key): \(.value.severity)"' >> $GITHUB_STEP_SUMMARY || echo "No security vulnerabilities found" >> $GITHUB_STEP_SUMMARY
     
     - name: Check for unused dependencies
       run: |
-        npm run unused-deps || true
+        pnpm run unused-deps || true

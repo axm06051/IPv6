@@ -23,15 +23,20 @@ jobs:
       uses: actions/setup-node@v6
       with:
         node-version: '22'
-        cache: 'npm'
+        cache: 'pnpm'
+    
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9
     
     - name: Install dependencies
-      run: npm ci
+      run: pnpm install --frozen-lockfile
     
     - name: Check if formatting is needed
       id: format-check
       run: |
-        if ! npm run format:check; then
+        if ! pnpm run format:check; then
           echo "needs_formatting=true" >> $GITHUB_OUTPUT
         else
           echo "needs_formatting=false" >> $GITHUB_OUTPUT
@@ -40,7 +45,7 @@ jobs:
     
     - name: Auto-format code
       if: steps.format-check.outputs.needs_formatting == 'true'
-      run: npm run format
+      run: pnpm run format
     
     - name: Commit formatted code
       if: steps.format-check.outputs.needs_formatting == 'true'
