@@ -19,8 +19,10 @@ function AnswerInput({ value, onChange, onSubmit, placeholder, mode, disabled })
         return "Enter decimal number (0-15)";
       case MemoryDrillMode.BINARY_TO_HEX:
         return "Enter hexadecimal digit (0-F)";
-      default:
+      case MemoryDrillMode.IPV4_BINARY_TO_DECIMAL:
         return "Enter decimal number (0-255)";
+      default:
+        return "Enter your answer";
     }
   };
 

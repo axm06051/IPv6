@@ -1,8 +1,8 @@
 import React from 'react';
 import { BsBook, BsCalculator } from 'react-icons/bs';
 import Exercise from './Exercise';
-import { createExerciseGenerator } from '../utils/exerciseGenerators';
-import { PrefixMode } from '../constants/prefixModes';
+import MemoryDrillGame from './memory/MemoryDrillGame';
+import { createExerciseGenerator, PrefixMode } from '../utils/exerciseGenerators';
 
 const TAB_CONFIG = [
   {
@@ -54,15 +54,14 @@ const TAB_CONFIG = [
     ]
   },
   {
-    id: 'math',
-    label: 'Math Practice',
+    id: 'memory',
+    label: 'Memory Drill',
     icon: BsCalculator,
     exercises: [
       {
-        title: 'Division Practice',
-        type: 'math',
-        mode: PrefixMode.RANDOM,
-        category: 'math-practice'
+        title: 'Prefix → Hex Memory',
+        type: 'memory-drill',
+        category: 'memory-drill'
       }
     ]
   }
@@ -112,12 +111,19 @@ function ExerciseTabs({ recordAnswer }) {
             <div className="row g-4">
               {tab.exercises.map((exercise) => (
                 <div key={exercise.category} className="col-12">
-                  <Exercise
-                    title={exercise.title}
-                    generator={createExerciseGenerator(exercise.type, exercise.mode)}
-                    category={exercise.category}
-                    onAnswerSubmit={recordAnswer}
-                  />
+                  {exercise.type === 'memory-drill' ? (
+                    <MemoryDrillGame
+                      category={exercise.category}
+                      onAnswerSubmit={recordAnswer}
+                    />
+                  ) : (
+                    <Exercise
+                      title={exercise.title}
+                      generator={createExerciseGenerator(exercise.type, exercise.mode)}
+                      category={exercise.category}
+                      onAnswerSubmit={recordAnswer}
+                    />
+                  )}
                 </div>
               ))}
             </div>

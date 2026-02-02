@@ -1,6 +1,6 @@
 import React from 'react';
-import ModalDialog from './ModalDialog';
-import StatisticsDisplay from '../StatisticsDisplay';
+import ModalDialog from './ModalDialog.js';
+import StatisticsDisplay from '../StatisticsDisplay.js';
 
 function confirmStatsReset() {
   return window.confirm('Are you sure you want to reset all statistics?');
@@ -13,7 +13,6 @@ function StatsModal({ show, onClose, stats, onReset }) {
       onClose();
     }
   };
-
   return (
     <ModalDialog
       show={show}
@@ -34,7 +33,7 @@ function StatsModal({ show, onClose, stats, onReset }) {
         </>
       }
     >
-      <StatisticsDisplay stats={stats} showDetails={true} />
+      <StatisticsDisplay stats={stats} showDetails={true} onReset={null} />
     </ModalDialog>
   );
 }

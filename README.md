@@ -19,6 +19,20 @@ A comprehensive React application for mastering IPv6 addressing and prefix calcu
 - **Solution**: Added `onKeyDown` event handlers to all input fields that detect Enter key presses and automatically submit answers
 - **Impact**: Significantly improved user experience with faster answer submission
 
+### Restored Memory Drill Functionality
+- **Complete Memory Drill System**: Full implementation of the advanced memory training system
+- **Multiple Drill Modes**: Prefix→Hextet, Hex→Binary, Binary→Decimal, Binary→Hex, IPv4 Binary→Decimal
+- **Penalty System**: Configurable penalty settings for incorrect answers to increase difficulty
+- **Progress Tracking**: Mastery system that tracks learning progress for each item
+- **Quick Reference Charts**: Educational reference materials shown after incorrect answers
+- **Batch Learning**: Cumulative learning system where mastered items stay in practice
+
+### Enhanced Pedagogical Feedback
+- **Detailed Error Messages**: Specific feedback for different types of mistakes
+- **Educational Suggestions**: Step-by-step guidance for corrections
+- **Format Validation**: Context-aware validation with helpful error messages
+- **Learning Tips**: Common mistake warnings and best practice suggestions
+
 ### Clean Code Architecture
 - Converted from a single-file CodePen to a modular React application
 - Separated concerns into logical components and utilities
@@ -76,7 +90,14 @@ A comprehensive React application for mastering IPv6 addressing and prefix calcu
    - Not Divisible by 4: Challenge yourself with irregular prefix lengths
    - Random Length: Mixed practice with various prefix lengths
 
-3. **Math Practice**
+3. **Memory Drill**
+   - **Prefix → Hextet**: Convert IPv6 prefix lengths to hextet positions (÷4)
+   - **Hex → Binary**: Convert hexadecimal digits to 4-bit binary
+   - **Binary → Decimal**: Convert 4-bit binary to decimal (0-15)
+   - **Binary → Hex**: Convert 4-bit binary to hexadecimal digits
+   - **IPv4 Binary → Decimal**: Convert 8-bit binary (IPv4 octets) to decimal (0-255)
+
+4. **Math Practice**
    - Division exercises to strengthen prefix calculation skills
 
 ### Keyboard Shortcuts

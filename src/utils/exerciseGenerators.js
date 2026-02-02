@@ -1,11 +1,95 @@
-import { randomIPv6, fullIPv6Format, shortestAbbreviation } from './ipv6Utils';
-import { PrefixMode } from '../constants/prefixModes';
-import ipaddr from 'ipaddr.js';
+import { 
+  randomIPv6, 
+  fullIPv6Format, 
+  shortestAbbreviation, 
+  ipv6Prefix,
+  addressHasInterestingPattern,
+  addressHasInterestingCompression,
+  tryGenerateInterestingFullToAbbrev,
+  tryGenerateInterestingAbbrevToFull
+} from './ipv6Utils.js';
+
+export const PrefixMode = {
+  FIXED_64: '64',
+  DIV_BY_4: 'div4',
+  NOT_DIV_BY_4: 'notdiv4',
+  RANDOM: 'random'
+};
+
+function getRandomInt(minInclusive, maxExclusive) {
+  const min = Math.ceil(minInclusive);
+  const max = Math.floor(maxExclusive);
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+function getCommonPrefixLengths() {
+  return [64, 60, 56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12, 8, 4];
+}
+
+function selectRandomCommonLength(min) {
+  const commonLengths = getCommonPrefixLengths();
+  const filtered = commonLengths.filter((l) => l >= min && l <= 128);
+  return filtered[Math.floor(Math.random() * filtered.length)];
+}
+
+function shouldUseCommonLength() {
+  return Math.random() < 0.4;
+}
+
+function shouldUseCommonDiv4Length() {
+  return Math.random() < 0.7;
+}
+
+function getPrefixLengthForDiv4Mode(min) {
+  const commonLengths = getCommonPrefixLengths();
+  const availableDiv4 = commonLengths.filter((l) => l >= min && l <= 128);
+  if (availableDiv4.length > 0 && shouldUseCommonDiv4Length()) {
+    return availableDiv4[Math.floor(Math.random() * availableDiv4.length)];
+  }
+  return 4 * getRandomInt(Math.ceil(min / 4), 33);
+}
+
+function getPrefixLengthForNotDiv4Mode(min) {
+  let p;
+  do {
+    p = getRandomInt(Math.max(min, 1), 129);
+  } while (p % 4 === 0);
+  return p;
+}
+
+export function getPrefixLength(mode, min = 0) {
+  if (mode === PrefixMode.RANDOM && shouldUseCommonLength()) {
+    return selectRandomCommonLength(min);
+  }
+  switch (mode) {
+    case PrefixMode.FIXED_64:
+      return 64;
+    case PrefixMode.DIV_BY_4:
+      return getPrefixLengthForDiv4Mode(min);
+    case PrefixMode.NOT_DIV_BY_4:
+      return getPrefixLengthForNotDiv4Mode(min);
+    case PrefixMode.RANDOM:
+    default:
+      return getRandomInt(min, 129);
+  }
+}
 
 export function generateFullToAbbrevExercise() {
   const addr = randomIPv6();
   const fullAddr = fullIPv6Format(addr);
   const shortest = shortestAbbreviation(addr);
+  
+  if (addressHasInterestingPattern(fullAddr)) {
+    return {
+      question: `\\texttt{${fullAddr}}`,
+      answer: shortest,
+      fullAnswer: fullAddr,
+      type: 'full-to-abbrev'
+    };
+  }
+  
+  const interesting = tryGenerateInterestingFullToAbbrev();
+  if (interesting) return interesting;
   
   return {
     question: `\\texttt{${fullAddr}}`,
@@ -20,6 +104,18 @@ export function generateAbbrevToFullExercise() {
   const shortest = shortestAbbreviation(addr);
   const fullAddr = fullIPv6Format(addr);
   
+  if (addressHasInterestingCompression(shortest)) {
+    return {
+      question: `\\texttt{${shortest}}`,
+      answer: fullAddr,
+      abbrevAnswer: shortest,
+      type: 'abbrev-to-full'
+    };
+  }
+  
+  const interesting = tryGenerateInterestingAbbrevToFull();
+  if (interesting) return interesting;
+  
   return {
     question: `\\texttt{${shortest}}`,
     answer: fullAddr,
@@ -32,40 +128,12 @@ export function generatePrefixExercise(mode) {
   const addr = randomIPv6();
   const bits = getPrefixLength(mode);
   const network = ipv6Prefix(addr, bits);
-  
   return {
     question: `\\texttt{${shortestAbbreviation(addr)}/${bits}}`,
     answer: `${shortestAbbreviation(network)}/${bits}`,
     fullAnswer: `${fullIPv6Format(network)}/${bits}`,
     type: 'prefix'
   };
-}
-
-export function generateMathExercise(mode) {
-  const P = calculatePrefixValueForMathExercise(mode);
-  return {
-    question: `\\frac{${P}}{4}`,
-    answer: Math.floor(P / 4).toString(),
-    type: 'math'
-  };
-}
-
-function getPrefixLength(mode, min = 0) {
-  switch (mode) {
-    case PrefixMode.FIXED_64:
-      return 64;
-    case PrefixMode.DIV_BY_4:
-      return 4 * getRandomInt(Math.max(1, Math.ceil(min / 4)), 33);
-    case PrefixMode.NOT_DIV_BY_4:
-      let p;
-      do {
-        p = getRandomInt(Math.max(min, 1), 129);
-      } while (p % 4 === 0);
-      return p;
-    case PrefixMode.RANDOM:
-    default:
-      return getRandomInt(min, 129);
-  }
 }
 
 function calculatePrefixValueForMathExercise(mode) {
@@ -79,42 +147,26 @@ function calculatePrefixValueForMathExercise(mode) {
   return 4 * getRandomInt(Math.max(1, Math.ceil(4 / 4)), 17);
 }
 
-function ipv6Prefix(addr, bits) {
-  const parts = addr.parts.slice();
-  const fullHextets = Math.floor(bits / 16);
-  const remainingBits = bits % 16;
-  
-  for (let i = fullHextets; i < 8; i++) {
-    parts[i] = 0;
-  }
-  
-  if (remainingBits > 0 && fullHextets < 8) {
-    const mask = ~((1 << (16 - remainingBits)) - 1) & 0xffff;
-    parts[fullHextets] &= mask;
-  }
-  
-  return new ipaddr.IPv6(parts);
+export function generateMathExercise(mode) {
+  const P = calculatePrefixValueForMathExercise(mode);
+  return {
+    question: `\\frac{${P}}{4}`,
+    answer: Math.floor(P / 4).toString(),
+    type: 'math'
+  };
 }
 
-function getRandomInt(minInclusive, maxExclusive) {
-  const min = Math.ceil(minInclusive);
-  const max = Math.floor(maxExclusive);
-  return Math.floor(Math.random() * (max - min) + min);
-}
+const exerciseGenerators = {
+  'full-to-abbrev': generateFullToAbbrevExercise,
+  'abbrev-to-full': generateAbbrevToFullExercise,
+  prefix: generatePrefixExercise,
+  math: generateMathExercise
+};
 
 export function createExerciseGenerator(type, mode = null) {
   return () => {
-    switch (type) {
-      case 'full-to-abbrev':
-        return generateFullToAbbrevExercise();
-      case 'abbrev-to-full':
-        return generateAbbrevToFullExercise();
-      case 'prefix':
-        return generatePrefixExercise(mode);
-      case 'math':
-        return generateMathExercise(mode);
-      default:
-        throw new Error(`Unknown exercise type: ${type}`);
-    }
+    const generator = exerciseGenerators[type];
+    if (!generator) throw new Error(`Unknown exercise type: ${type}`);
+    return generator(mode);
   };
 }

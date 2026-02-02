@@ -1,5 +1,5 @@
 import React from 'react';
-import ModalDialog from './ModalDialog';
+import ModalDialog from './ModalDialog.js';
 
 function AboutModal({ show, onClose }) {
   return (
@@ -16,26 +16,25 @@ function AboutModal({ show, onClose }) {
       <p className="lead">
         A comprehensive training application for mastering IPv6 addressing.
       </p>
-      
       <h6 className="mt-4">Features</h6>
       <ul>
         <li>Address format conversion exercises</li>
         <li>Network prefix calculations</li>
         <li>Prefix mathematics practice</li>
         <li>Real-time feedback and statistics</li>
-        <li>Keyboard shortcuts (Press Enter to submit answers)</li>
       </ul>
-      
       <h6 className="mt-4">Format Requirements:</h6>
       <ul className="mb-0">
-        <li><strong>"Full to Abbreviated":</strong> Shortest valid abbreviation</li>
-        <li><strong>"Abbreviated to Full":</strong> Full 4-digit hextets</li>
-        <li><strong>"Prefix":</strong> Abbreviated address with prefix</li>
+        <li>
+          <strong>"Full to Abbreviated":</strong> Shortest valid abbreviation
+        </li>
+        <li>
+          <strong>"Abbreviated to Full":</strong> Full 4-digit hextets
+        </li>
+        <li>
+          <strong>"Prefix":</strong> Abbreviated address with prefix
+        </li>
       </ul>
-      
-      <div className="alert alert-info mt-3">
-        <strong>Tip:</strong> Use the Enter key to quickly submit your answers!
-      </div>
     </ModalDialog>
   );
 }
