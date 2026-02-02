@@ -83,15 +83,28 @@ function QuestionDisplay({ currentQuestion, result, mode }) {
   );
 }
 
-function AnswerInput({ value, onChange, placeholder, mode, disabled }) {
+function AnswerInput({ value, onChange, placeholder, mode, disabled, onSubmit, onNext, result, inputRef }) {
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !disabled) {
+      e.preventDefault();
+      if (!result) {
+        onSubmit();
+      } else {
+        onNext();
+      }
+    }
+  };
+
   return (
     <div className="mb-3">
       <label className="form-label">Your Answer</label>
       <input
+        ref={inputRef}
         type="text"
         className="form-control form-control-lg font-monospace text-center"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onKeyDown={handleKeyDown}
         placeholder={placeholder}
         autoComplete="off"
         spellCheck="false"
@@ -631,6 +644,7 @@ function MemoryDrillGameInterface({
   penaltySettings,
   showSettings,
   penaltyAmountInput,
+  inputRef,
   onInputChange,
   onSubmit,
   onNext,
@@ -669,7 +683,11 @@ function MemoryDrillGameInterface({
           onChange={onInputChange}
           placeholder={getInputPlaceholder()}
           mode={mode}
-          disabled={!!result}
+          disabled={false}
+          onSubmit={onSubmit}
+          onNext={onNext}
+          result={result}
+          inputRef={inputRef}
         />
         {result && (
           <ResultDisplay

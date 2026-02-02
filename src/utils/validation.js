@@ -1,9 +1,20 @@
 import ipaddr from 'ipaddr.js';
 
 export function isValidIPv6String(str) {
+  if (!str || typeof str !== 'string') return false;
+  
+  const trimmed = str.trim();
+  
+  // Basic IPv6 format check - must contain at least one colon
+  if (!trimmed.includes(':')) return false;
+  
+  // Check for obviously invalid patterns
+  if (trimmed.length < 2 || trimmed.length > 39) return false;
+  
   try {
-    ipaddr.parse(str.trim());
-    return true;
+    const addr = ipaddr.parse(trimmed);
+    // Only accept IPv6 addresses, not IPv4
+    return addr.kind() === 'ipv6';
   } catch {
     return false;
   }
@@ -109,9 +120,20 @@ function validateMathAnswer(userInput, expectedAnswer) {
 }
 
 export function computeShortestFormFromUserInput(userFormattedInput) {
-  if (!isValidIPv6String(userFormattedInput)) return null;
+  // Don't process obviously invalid inputs
+  if (!userFormattedInput || userFormattedInput.trim().length < 2) return null;
+  
+  const trimmed = userFormattedInput.trim();
+  
+  // Basic IPv6 format check - must contain at least one colon for IPv6
+  if (!trimmed.includes(':')) return null;
+  
+  if (!isValidIPv6String(trimmed)) return null;
+  
   try {
-    const addr = ipaddr.parse(userFormattedInput);
+    const addr = ipaddr.parse(trimmed);
+    // Only process if it's actually an IPv6 address, not IPv4
+    if (addr.kind() !== 'ipv6') return null;
     return addr.toString().toUpperCase();
   } catch {
     return null;

@@ -1,11 +1,15 @@
 import React from 'react';
 import { MemoryDrillMode } from '../constants/memoryDrillModes';
 
-function AnswerInput({ value, onChange, onSubmit, placeholder, mode, disabled }) {
+function AnswerInput({ value, onChange, onSubmit, onNext, placeholder, mode, disabled, result }) {
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !disabled && value.trim()) {
+    if (e.key === 'Enter' && !disabled) {
       e.preventDefault();
-      onSubmit();
+      if (!result && value.trim()) {
+        onSubmit();
+      } else if (result && onNext) {
+        onNext();
+      }
     }
   };
 
@@ -44,7 +48,9 @@ function AnswerInput({ value, onChange, onSubmit, placeholder, mode, disabled })
       <div className="form-text">
         {getHelpText()}
         <br />
-        <small className="text-muted">Press Enter to submit</small>
+        <small className="text-muted">
+          Press Enter to {result ? 'continue to next question' : 'submit your answer'}
+        </small>
       </div>
     </div>
   );

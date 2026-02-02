@@ -81,7 +81,7 @@ function getInputPattern(mode, value) {
   const patterns = {
     [MemoryDrillMode.PREFIX_TO_HEXTET]: () =>
       /^\d{1,2}$/.test(value) && parseInt(value) >= 0 && parseInt(value) <= 31,
-    [MemoryDrillMode.HEX_TO_BINARY]: () => /^[01]{4}$/.test(value),
+    [MemoryDrillMode.HEX_TO_BINARY]: () => /^[01]{1,4}$/.test(value),
     [MemoryDrillMode.BINARY_TO_DECIMAL]: () =>
       /^\d{1,2}$/.test(value) && parseInt(value) >= 0 && parseInt(value) <= 15,
     [MemoryDrillMode.BINARY_TO_HEX]: () => /^[0-9A-F]$/i.test(value),
@@ -374,7 +374,8 @@ export function useMemoryDrillGame(category, onAnswerSubmit) {
       showSettings,
       showPrefixSelection,
       penaltyAmountInput,
-      selectedPrefixes
+      selectedPrefixes,
+      inputRef
     },
     actions: {
       handleInputChange,

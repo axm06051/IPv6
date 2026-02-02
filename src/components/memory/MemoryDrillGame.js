@@ -17,7 +17,8 @@ function MemoryDrillGame({ category, onAnswerSubmit }) {
     showModeInstructions,
     showSettings,
     penaltyAmountInput,
-    selectedPrefixes
+    selectedPrefixes,
+    inputRef
   } = state;
   const {
     handleInputChange,
@@ -92,6 +93,7 @@ function MemoryDrillGame({ category, onAnswerSubmit }) {
       penaltySettings={penaltySettings}
       showSettings={showSettings}
       penaltyAmountInput={penaltyAmountInput}
+      inputRef={inputRef}
       onInputChange={handleInputChange}
       onSubmit={submit}
       onNext={next}

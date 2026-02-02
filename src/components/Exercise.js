@@ -316,6 +316,7 @@ function Exercise({ title, generator, category, onAnswerSubmit }) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
+              e.preventDefault();
               if (!result) {
                 submit();
               } else {
