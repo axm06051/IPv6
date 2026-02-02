@@ -1,6 +1,7 @@
-/* Base monospace styling with responsive sizing */
 .font-monospace {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family:
+    SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
   font-size: clamp(0.75rem, 2.5vw, 0.875rem);
   letter-spacing: -0.02em;
 }
@@ -25,7 +26,6 @@
   font-size: clamp(1rem, 3.5vw, 1.25rem);
 }
 
-/* Card body styling */
 .card-body .ipv6-display {
   overflow-wrap: break-word;
   max-width: 100%;
@@ -50,7 +50,6 @@
   font-size: clamp(0.95rem, 3.5vw, 1.1rem);
 }
 
-/* KaTeX responsive sizing */
 .katex {
   font-size: clamp(1.5rem, 5vw, 2.5rem) !important;
 }
@@ -61,7 +60,6 @@
   max-width: 100%;
 }
 
-/* Alert styling with responsive borders */
 .alert {
   font-size: clamp(0.85rem, 2.5vw, 0.95rem);
   border-left: clamp(3px, 0.5vw, 4px) solid;
@@ -83,7 +81,6 @@
   border-left-color: var(--bs-danger);
 }
 
-/* Background tertiary sections */
 .bg-body-tertiary {
   padding: clamp(0.75rem, 2.5vw, 1rem) !important;
 }
@@ -105,7 +102,6 @@
   border-radius: 0.25rem;
 }
 
-/* Comparison cards with better responsive sizing */
 .card.border .card-body {
   padding: clamp(0.75rem, 2.5vw, 1rem);
 }
@@ -119,66 +115,63 @@
   word-break: break-all;
 }
 
-/* Mobile-specific adjustments */
 @media (max-width: 768px) {
   .card-body .bg-body-secondary {
     padding: clamp(0.75rem, 3vw, 1rem) !important;
   }
-  
+
   .card-body .bg-body-secondary .ipv6-display {
     font-size: clamp(0.875rem, 4vw, 1.25rem) !important;
     padding: clamp(0.5rem, 2vw, 0.75rem);
   }
-  
+
   .nav-tabs {
     font-size: clamp(0.75rem, 2.5vw, 0.875rem);
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .nav-tabs .nav-link {
     padding: clamp(0.5rem, 2vw, 0.75rem);
     white-space: nowrap;
   }
-  
+
   .nav-tabs .nav-link svg {
     width: clamp(0.875rem, 3vw, 1rem);
     height: clamp(0.875rem, 3vw, 1rem);
   }
 }
 
-/* Extra small devices */
 @media (max-width: 576px) {
   .valid-feedback,
   .invalid-feedback {
     font-size: clamp(0.8rem, 3vw, 0.9rem) !important;
   }
-  
+
   .bg-body-tertiary ul {
     font-size: clamp(0.8rem, 2.5vw, 0.9rem);
     padding-left: 1rem;
   }
-  
+
   .navbar .navbar-brand {
     font-size: clamp(1rem, 4vw, 1.25rem);
   }
-  
+
   .navbar small {
     font-size: clamp(0.7rem, 2vw, 0.75rem);
   }
-  
+
   .card-header h5 {
     font-size: clamp(1rem, 3.5vw, 1.25rem);
   }
-  
+
   .btn {
     font-size: clamp(0.875rem, 3vw, 1rem);
     padding: clamp(0.5rem, 2vw, 0.625rem) clamp(0.75rem, 3vw, 1rem);
   }
 }
 
-/* Card hover effects */
 .card {
   transition: box-shadow 0.3s ease;
 }
@@ -187,7 +180,6 @@
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Nav tabs styling */
 .nav-tabs .nav-link {
   font-weight: 500;
   transition: all 0.2s ease;
@@ -205,7 +197,6 @@
   font-weight: 600;
 }
 
-/* Button styling */
 .btn {
   font-weight: 500;
   transition: all 0.2s ease;
@@ -216,7 +207,6 @@
   opacity: 0.5;
 }
 
-/* Offcanvas menu */
 .offcanvas-body .list-group-item {
   font-size: clamp(0.875rem, 3vw, 1rem);
   padding: clamp(0.75rem, 2.5vw, 1rem);
@@ -230,7 +220,6 @@
   transform: translateX(4px);
 }
 
-/* Progress bar */
 .progress {
   border-radius: 0.5rem;
   overflow: hidden;
@@ -245,7 +234,6 @@
   justify-content: center;
 }
 
-/* Table styling */
 .table {
   font-size: clamp(0.875rem, 2.5vw, 1rem);
 }
@@ -262,14 +250,12 @@
   padding: clamp(0.5rem, 2vw, 0.75rem);
 }
 
-/* Badge styling */
 .badge {
   font-weight: 600;
   padding: clamp(0.25em, 1vw, 0.35em) clamp(0.5em, 2vw, 0.65em);
   font-size: clamp(0.75rem, 2.5vw, 0.875rem);
 }
 
-/* Modal responsive sizing */
 .modal-dialog {
   margin: clamp(0.5rem, 2vw, 1.75rem);
 }
@@ -283,7 +269,6 @@
   padding: clamp(1rem, 3vw, 1.5rem);
 }
 
-/* Dark theme adjustments */
 [data-bs-theme="dark"] {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.1);
@@ -347,7 +332,6 @@
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* Light theme adjustments */
 [data-bs-theme="light"] .bg-body-secondary {
   background-color: rgba(0, 0, 0, 0.03) !important;
   border-color: rgba(0, 0, 0, 0.1) !important;
@@ -373,27 +357,23 @@
   box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
 }
 
-/* Smooth transitions */
 * {
   transition-property: background-color, border-color, color;
   transition-duration: 0.2s;
   transition-timing-function: ease-in-out;
 }
 
-/* Focus visibility */
 *:focus-visible {
   outline: 2px solid var(--bs-primary);
   outline-offset: 2px;
 }
 
-/* Container max-width for better readability */
 .container {
   max-width: clamp(320px, 100%, 1400px);
   padding-left: clamp(0.75rem, 3vw, 1rem);
   padding-right: clamp(0.75rem, 3vw, 1rem);
 }
 
-/* Ensure touch-friendly tap targets */
 @media (max-width: 768px) {
   button,
   .btn,
