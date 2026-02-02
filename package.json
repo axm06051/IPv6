@@ -2,6 +2,7 @@
   "name": "ipv6-practice-app",
   "version": "1.0.0",
   "description": "IPv6 Practice Exercises - React App",
+  "homepage": "https://axm06051.github.io/IPv6",
   "main": "src/index.js",
   "scripts": {
     "start": "react-scripts start",
