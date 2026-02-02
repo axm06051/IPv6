@@ -1,0 +1,39 @@
+name: Dependency Update Check
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Weekly on Monday
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '22'
+        cache: 'npm'
+    
+    - name: Check for outdated packages
+      run: |
+        npm outdated || true
+        echo "## Outdated Dependencies" >> $GITHUB_STEP_SUMMARY
+        npm outdated --json | jq -r 'to_entries[] | "- \(.key): \(.value.current) → \(.value.wanted)"' >> $GITHUB_STEP_SUMMARY || echo "No outdated dependencies found" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Check for security vulnerabilities
+      run: |
+        npm audit --audit-level moderate || true
+        echo "## Security Audit" >> $GITHUB_STEP_SUMMARY
+        npm audit --json | jq -r '.vulnerabilities | to_entries[] | "- \(.key): \(.value.severity)"' >> $GITHUB_STEP_SUMMARY || echo "No security vulnerabilities found" >> $GITHUB_STEP_SUMMARY
+    
+    - name: Check for unused dependencies
+      run: |
+        npm run unused-deps || true

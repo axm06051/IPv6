@@ -1,0 +1,52 @@
+name: Format Check
+
+on:
+  pull_request:
+    branches: [ master, main ]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        ref: ${{ github.head_ref }}
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '22'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Check if formatting is needed
+      id: format-check
+      run: |
+        if ! npm run format:check; then
+          echo "needs_formatting=true" >> $GITHUB_OUTPUT
+        else
+          echo "needs_formatting=false" >> $GITHUB_OUTPUT
+        fi
+      continue-on-error: true
+    
+    - name: Auto-format code
+      if: steps.format-check.outputs.needs_formatting == 'true'
+      run: npm run format
+    
+    - name: Commit formatted code
+      if: steps.format-check.outputs.needs_formatting == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .
+        git diff --staged --quiet || git commit -m "style: auto-format code with Prettier"
+        git push
