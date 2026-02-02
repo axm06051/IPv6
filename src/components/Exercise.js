@@ -275,11 +275,14 @@ function Exercise({ title, generator, category, onAnswerSubmit }) {
       ex.type === 'full-to-abbrev' && !isCorrect
         ? computeShortestFormFromUserInput(userFormattedInput)
         : null;
-    setResult(
-      createResultState(isCorrect, ex, userFormattedInput, shortestForm)
-    );
+    const resultState = createResultState(isCorrect, ex, userFormattedInput, shortestForm);
+    setResult(resultState);
+    setInput(''); // Clear input after submit
     onAnswerSubmit(category, isCorrect);
-    setTimeout(() => setIsSubmitting(false), 300);
+    
+    setTimeout(() => {
+      setIsSubmitting(false);
+    }, 300);
   }, [input, isSubmitting, ex, category, onAnswerSubmit]);
 
   const next = useCallback(() => {
@@ -292,10 +295,25 @@ function Exercise({ title, generator, category, onAnswerSubmit }) {
   }, [generator]);
 
   useEffect(() => {
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 10);
+    const focusInput = () => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    };
+    
+    const timeoutId = setTimeout(focusInput, 50);
+    
+    return () => clearTimeout(timeoutId);
   }, [ex]);
+
+  // Focus input when it's cleared after submit (when result exists but input is empty)
+  useEffect(() => {
+    if (result && input === '' && !isSubmitting) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50);
+    }
+  }, [result, input, isSubmitting]);
 
   return (
     <Card title={title}>
@@ -317,10 +335,12 @@ function Exercise({ title, generator, category, onAnswerSubmit }) {
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
               e.preventDefault();
-              if (!result) {
-                submit();
-              } else {
+              if (result) {
+                // If there's a result (feedback is shown), go to next question
                 next();
+              } else if (input.trim()) {
+                // If no result and there's input, submit the answer
+                submit();
               }
             }
           }}

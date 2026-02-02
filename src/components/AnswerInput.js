@@ -1,13 +1,13 @@
 import React from 'react';
 import { MemoryDrillMode } from '../constants/memoryDrillModes';
 
-function AnswerInput({ value, onChange, onSubmit, onNext, placeholder, mode, disabled, result }) {
+function AnswerInput({ value, onChange, onSubmit, onNext, placeholder, mode, disabled, result, inputRef }) {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !disabled) {
       e.preventDefault();
-      if (!result && value.trim()) {
+      if (!result) {
         onSubmit();
-      } else if (result && onNext) {
+      } else {
         onNext();
       }
     }
@@ -34,6 +34,7 @@ function AnswerInput({ value, onChange, onSubmit, onNext, placeholder, mode, dis
     <div className="mb-3">
       <label className="form-label">Your Answer</label>
       <input
+        ref={inputRef}
         type="text"
         className="form-control form-control-lg font-monospace text-center"
         value={value}
@@ -43,7 +44,7 @@ function AnswerInput({ value, onChange, onSubmit, onNext, placeholder, mode, dis
         autoComplete="off"
         spellCheck="false"
         disabled={disabled}
-        autoFocus
+        autoFocus={!inputRef}
       />
       <div className="form-text">
         {getHelpText()}
