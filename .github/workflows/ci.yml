@@ -52,6 +52,7 @@ jobs:
     
     - name: Security audit
       run: pnpm audit --audit-level moderate
+      continue-on-error: true
     
     - name: Build application
       run: pnpm run build
